@@ -1,11 +1,14 @@
-import sys
-
 from fastapi import FastAPI
 import mysql.connector as mydb
 from fastapi.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"]
+)
 
 # コネクションの作成
 conn = mydb.connect(
@@ -19,7 +22,6 @@ conn = mydb.connect(
 # コネクションが切れた時に再接続してくれるよう設定
 conn.ping(reconnect=True)
 print(conn.is_connected())
-# sys.setrecursionlimit(100)
 
 
 @app.get("/get/{uuid}")
@@ -46,9 +48,9 @@ def append(avt, advancements, ended, r, overwrite=False):
                     ended = r_f[1]
                 except ValueError:
                     pass
-        ret = {"name": avt[0], "children": tmp}
+        ret = {"id": avt[0], "name": avt[1], "icon": avt[4], "type": avt[5], "children": tmp}
     elif overwrite:
-        index = list(map(lambda x: x["name"], r)).index(avt[0])
+        index = list(map(lambda x: x["id"], r)).index(avt[0])
         ret = r[index]
         del r[index]
     return ret, ended, r
@@ -62,7 +64,7 @@ async def advancement():
     cur.close()
     ret = []
     ended = []
-    advancements = list(map(lambda n: (n[0], n[1], n[2], n[3].split(",")), advancements))
+    advancements = list(map(lambda n: (n[0], n[1], n[2], n[3].split(","), n[4], n[5]), advancements))
     for i in advancements:
         r = append(i, advancements, ended, ret)
         ret = r[2]
