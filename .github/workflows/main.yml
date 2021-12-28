@@ -31,6 +31,7 @@ jobs:
       with:
         name: 'advancement-server'
         runtime: 'python39'
+        project_id: ${{ secrets.GKE_PROJECT_DEV }}
 
     # Example of using the output
     - id: 'test'
