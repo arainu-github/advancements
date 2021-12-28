@@ -32,4 +32,4 @@ jobs:
 
     # Example of using the output
     - id: 'test'
-      run: 'curl "${{ steps.deploy.outputs.url }}/advancements"'
+      run: 'curl "https://asia-northeast1-swift-arcadia-332108.cloudfunctions.net/get_advancements"'
