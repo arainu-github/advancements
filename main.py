@@ -10,7 +10,7 @@ app = Flask(__name__)
 conn = mydb.connect(
     host=os.environ["host"],
     port="3306",
-    user="root",
+    user=os.environ["user"],
     password=os.environ["password"],
     database="metaverse"
 )
