@@ -43,7 +43,7 @@ def append(avt, advancements, ended, r, overwrite=False):
     return ret, ended, r
 
 
-@app.route('/advancements')
+@app.route('/')
 def get_advancements():
     cur = conn.cursor()
     cur.execute("SELECT * FROM `advancement`")
