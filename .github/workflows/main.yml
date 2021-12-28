@@ -27,11 +27,8 @@ jobs:
         project_id: ${{ secrets.GKE_PROJECT_DEV }}
 
     - id: 'deploy'
-      uses: 'google-github-actions/deploy-cloud-functions@v0'
-      with:
-        name: 'advancement-server'
-        runtime: 'python39'
-        project_id: ${{ secrets.GKE_PROJECT_DEV }}
+      run: |
+        gcloud functions deploy advancements-server --runtime python39 --timeout 3 --trigger-http
 
     # Example of using the output
     - id: 'test'
