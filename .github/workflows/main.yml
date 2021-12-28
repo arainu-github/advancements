@@ -28,7 +28,7 @@ jobs:
 
     - id: 'deploy'
       run: |
-        gcloud functions deploy advancements-server --runtime python39 --timeout 3 --trigger-http --set-env-vars="host"=${{ secrets.HOST }},"passoword"=${{ secrets.PASSWORD }} --region asia-northeast1
+        gcloud functions deploy advancements-server --runtime python39 --timeout 3 --trigger-http --set-env-vars="host"="${{ secrets.HOST }}","passoword"="${{ secrets.PASSWORD }}" --region asia-northeast1
 
     # Example of using the output
     - id: 'test'
