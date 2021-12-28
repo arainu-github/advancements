@@ -1,14 +1,8 @@
-from fastapi import FastAPI
+from flask import Flask, jsonify
 import mysql.connector as mydb
-from fastapi.responses import JSONResponse
-from starlette.middleware.cors import CORSMiddleware
 
 
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"]
-)
+app = Flask(__name__)
 
 # コネクションの作成
 conn = mydb.connect(
@@ -22,15 +16,6 @@ conn = mydb.connect(
 # コネクションが切れた時に再接続してくれるよう設定
 conn.ping(reconnect=True)
 print(conn.is_connected())
-
-
-@app.get("/get/{uuid}")
-async def root(uuid: str):
-    cur = conn.cursor()
-    cur.execute(f"SELECT * FROM `advancement` WHERE `id` LIKE '{uuid}'")
-    ret = cur.fetchall()
-    cur.close()
-    return ret
 
 
 def append(avt, advancements, ended, r, overwrite=False):
@@ -56,8 +41,8 @@ def append(avt, advancements, ended, r, overwrite=False):
     return ret, ended, r
 
 
-@app.get("/advancements")
-async def advancement():
+@app.route('/advancements')
+def hello_world():
     cur = conn.cursor()
     cur.execute("SELECT * FROM `advancement`")
     advancements = cur.fetchall()
@@ -71,4 +56,8 @@ async def advancement():
         if r[0] != {}:
             ret.append(r[0])
         ended = r[1]
-    return JSONResponse(ret)
+    return jsonify(ret)
+
+
+if __name__ == '__main__':
+    app.run()
