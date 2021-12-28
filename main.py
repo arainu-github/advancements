@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify
 import mysql.connector as mydb
 
@@ -6,10 +8,10 @@ app = Flask(__name__)
 
 # コネクションの作成
 conn = mydb.connect(
-    host="localhost",
+    host=os.environ["host"],
     port="3306",
     user="root",
-    password="test",
+    password=os.environ["password"],
     database="metaverse"
 )
 
