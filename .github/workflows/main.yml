@@ -55,10 +55,10 @@ jobs:
               --project $PROJECT_ID \
               --region asia-northeast1 \
               --platform=managed \
-              --allow-unauthenticated
-              --max-instances 10
-              --memory 128Mi
-              --timeout 15
+              --allow-unauthenticated \
+              --max-instances 10 \
+              --memory 128Mi \
+              --timeout 15 \
               --set-env-vars="host"="${{ secrets.HOST }}","password"="${{ secrets.PASSWORD }}","user"="${{ secrets.USER }}"
 
     # Example of using the output
