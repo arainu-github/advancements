@@ -2,10 +2,8 @@ import os
 
 from flask import Flask, jsonify
 import mysql.connector as mydb
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
 
 # コネクションの作成
 conn = mydb.connect(
@@ -59,7 +57,12 @@ def get_advancements(_):
         if r[0] != {}:
             ret.append(r[0])
         ended = r[1]
-    return jsonify(ret)
+
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
+
+    return jsonify(ret), 200, headers
 
 
 if __name__ == '__main__':
