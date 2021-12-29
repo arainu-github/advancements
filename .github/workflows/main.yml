@@ -28,7 +28,7 @@ jobs:
 
     - id: 'deploy'
       run: |
-        gcloud functions deploy get_advancements --vpc-connector default-connector --allow-unauthenticated --runtime python39 --timeout 15 --trigger-http --set-env-vars="host"="${{ secrets.HOST }}","password"="${{ secrets.PASSWORD }}","user"="${{ secrets.USER }}" --region asia-northeast1
+        gcloud functions deploy get_advancements --memory 1024MB --vpc-connector default-connector --allow-unauthenticated --runtime python39 --timeout 15 --trigger-http --set-env-vars="host"="${{ secrets.HOST }}","password"="${{ secrets.PASSWORD }}","user"="${{ secrets.USER }}" --region asia-northeast1
 
     # Example of using the output
     - id: 'test'
