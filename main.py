@@ -44,7 +44,7 @@ def append(avt, advancements, ended, r, overwrite=False):
 
 
 @app.route('/')
-def get_advancements(request):
+def get_advancements(_):
     cur = conn.cursor()
     cur.execute("SELECT * FROM `advancement`")
     advancements = cur.fetchall()
