@@ -29,8 +29,7 @@ def append(avt, advancements, ended, r, overwrite=False):
     return ret, ended, r
 
 
-@app.route('/')
-def get_advancements():
+def connect_sql():
     # コネクションの作成
     conn = mydb.connect(
         host=os.environ["host"],
@@ -43,7 +42,12 @@ def get_advancements():
     # コネクションが切れた時に再接続してくれるよう設定
     conn.ping(reconnect=True)
     print(conn.is_connected())
+    return conn
 
+
+@app.route('/')
+def get_advancements():
+    conn = connect_sql()
     cur = conn.cursor()
     cur.execute("SELECT * FROM `advancement`")
     advancements = cur.fetchall()
@@ -59,7 +63,17 @@ def get_advancements():
         ended = r[1]
     conn.close()
 
-    return jsonify(ret), 200
+    return jsonify(ret)
+
+
+@app.route('/player')
+def get_advancements(uuid: str):
+    conn = connect_sql()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM `playeradvancement` WHERE uuid LIKE " + uuid)
+    pav = cur.fetchall()
+    cur.close()
+    return pav
 
 
 def run():
