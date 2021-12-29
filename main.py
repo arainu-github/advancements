@@ -62,5 +62,9 @@ def get_advancements():
     return jsonify(ret), 200
 
 
+def run():
+    return app
+
+
 if __name__ == '__main__':
     app.run()

@@ -5,4 +5,4 @@ RUN pip install flask mysql-connector-python
 
 COPY . .
 
-CMD ["python","./main.py"]
+CMD ["waitress-serve", "--port", "5000", "main:app"]
