@@ -5,19 +5,6 @@ import mysql.connector as mydb
 
 app = Flask(__name__)
 
-# コネクションの作成
-conn = mydb.connect(
-    host=os.environ["host"],
-    port="3306",
-    user=os.environ["user"],
-    password=os.environ["password"],
-    database="metaverse"
-)
-
-# コネクションが切れた時に再接続してくれるよう設定
-conn.ping(reconnect=True)
-print(conn.is_connected())
-
 
 def append(avt, advancements, ended, r, overwrite=False):
     ret = {}
@@ -44,6 +31,19 @@ def append(avt, advancements, ended, r, overwrite=False):
 
 @app.route('/')
 def get_advancements(_):
+    # コネクションの作成
+    conn = mydb.connect(
+        host=os.environ["host"],
+        port="3306",
+        user=os.environ["user"],
+        password=os.environ["password"],
+        database="metaverse"
+    )
+
+    # コネクションが切れた時に再接続してくれるよう設定
+    conn.ping(reconnect=True)
+    print(conn.is_connected())
+
     cur = conn.cursor()
     cur.execute("SELECT * FROM `advancement`")
     advancements = cur.fetchall()
@@ -61,6 +61,7 @@ def get_advancements(_):
     headers = {
         'Access-Control-Allow-Origin': '*'
     }
+    conn.close()
 
     return jsonify(ret), 200, headers
 
