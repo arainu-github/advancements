@@ -21,7 +21,7 @@ def append(avt, advancements, ended, r, overwrite=False):
                     ended = r_f[1]
                 except ValueError:
                     pass
-        ret = {"id": avt[0], "name": avt[1], "icon": avt[4], "type": avt[5], "children": tmp}
+        ret = {"id": avt[0], "name": avt[1], "description": avt[2], "icon": avt[4], "type": avt[5], "children": tmp}
     elif overwrite:
         index = list(map(lambda x: x["id"], r)).index(avt[0])
         ret = r[index]
