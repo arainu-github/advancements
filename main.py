@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import mysql.connector as mydb
 
 app = Flask(__name__)
@@ -67,13 +67,14 @@ def get_advancements():
 
 
 @app.route('/player')
-def get_advancements(uuid: str):
+def get_player():
+    print(request.args.get("uuid"))
     conn = connect_sql()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM `playeradvancement` WHERE uuid LIKE " + uuid)
+    cur.execute("SELECT * FROM `playeradvancement` WHERE uuid LIKE '" + request.args.get("uuid")+"'")
     pav = cur.fetchall()
     cur.close()
-    return pav
+    return jsonify(pav)
 
 
 def run():
