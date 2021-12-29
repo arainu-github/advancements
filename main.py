@@ -30,7 +30,7 @@ def append(avt, advancements, ended, r, overwrite=False):
 
 
 @app.route('/')
-def get_advancements(_):
+def get_advancements():
     # コネクションの作成
     conn = mydb.connect(
         host=os.environ["host"],
@@ -57,13 +57,9 @@ def get_advancements(_):
         if r[0] != {}:
             ret.append(r[0])
         ended = r[1]
-
-    headers = {
-        'Access-Control-Allow-Origin': '*'
-    }
     conn.close()
 
-    return jsonify(ret), 200, headers
+    return jsonify(ret), 200
 
 
 if __name__ == '__main__':
