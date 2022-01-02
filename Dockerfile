@@ -1,7 +1,7 @@
 FROM python:3
 
 WORKDIR /usr/src/app
-RUN pip install flask mysql-connector-python waitress
+RUN pip install flask mysql-connector-python waitress flask_cors
 
 COPY . .
 

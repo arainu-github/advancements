@@ -1,10 +1,11 @@
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import mysql.connector as mydb
 
 app = Flask(__name__)
-
+CORS(app)
 
 def append(avt, advancements, ended, r, overwrite=False):
     ret = {}
