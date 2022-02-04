@@ -60,7 +60,3 @@ jobs:
               --memory 128Mi \
               --timeout 15 \
               --set-env-vars="host"="${{ secrets.HOST }}","password"="${{ secrets.PASSWORD }}","user"="${{ secrets.USER }}"
-
-    # Example of using the output
-    - id: 'test'
-      run: 'curl "https://asia-northeast1-swift-arcadia-332108.cloudfunctions.net/get_advancements"'
